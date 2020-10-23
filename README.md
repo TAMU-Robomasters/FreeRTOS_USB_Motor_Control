@@ -4,6 +4,8 @@
 
 2. Need a dev board, J-Link, micro USB cable.
 
+3. Motor will only move at fixed speed but different directions.
+
 # Getting Started
 
 1. Compile the code.
