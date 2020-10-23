@@ -23,7 +23,7 @@
 #include "usbd_cdc_if.h"
 
 /* USER CODE BEGIN INCLUDE */
-
+#include "tim.h"
 /* USER CODE END INCLUDE */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -265,6 +265,22 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
+	
+	if (Buf[0] == '1')
+	{		
+		// Clockwise rotation
+		__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1460);
+	}
+	else if (Buf[0] == '2')
+	{
+		// Counter-clockwise rotation
+		__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1540);
+	}
+	else {
+		// Stop rotation
+		__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1500);
+	}
+	
   return (USBD_OK);
   /* USER CODE END 6 */
 }

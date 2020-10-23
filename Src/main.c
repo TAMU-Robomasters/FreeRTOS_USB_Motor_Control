@@ -93,7 +93,17 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM5_Init();
   /* USER CODE BEGIN 2 */
-
+	MX_USB_DEVICE_Init();
+	
+	// Start timer 5 for PWM signal generation
+	HAL_TIM_Base_Start_IT(&htim5);
+	
+	// Start timer 5 channel 4 for PWM signal generation
+	HAL_TIM_PWM_Start(&htim5, TIM_CHANNEL_4);		
+	
+	// Let the servo stop
+	// Only applies for GM6020
+	__HAL_TIM_SetCompare(&htim5, TIM_CHANNEL_4, 1500);
   /* USER CODE END 2 */
   /* Init scheduler */
   osKernelInitialize();
